@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://wps0hpecyxnr"]
+
+[ext_resource type="Texture2D" uid="uid://bbbhej0k8yjsu" path="res://graphics/ship/playerShip1_red.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://okioub41sr24" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="AudioStream" uid="uid://8bbvmvh6lik0" path="res://audio/laser.wav" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://bgu76ysx82j2w" path="res://audio/damage.ogg" id="4_dqkch"]
+
+[sub_resource type="Gradient" id="Gradient_dqkch"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m6471"]
+gradient = SubResource("Gradient_dqkch")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ey1e2"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 12.0
+gravity = Vector3(0, 100, 0)
+scale_min = 6.0
+scale_max = 10.0
+color = Color(0.999188, 0, 0.06956175, 1)
+color_ramp = SubResource("GradientTexture1D_m6471")
+
+[node name="Player" type="CharacterBody2D" unique_id=1455332650]
+collision_mask = 6
+script = ExtResource("1_g2els")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1067822310]
+position = Vector2(0, 33)
+lifetime = 0.3
+process_material = SubResource("ParticleProcessMaterial_ey1e2")
+
+[node name="PlayerImage" type="Sprite2D" parent="." unique_id=172927965]
+texture = ExtResource("1_3vyb7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=873597876]
+polygon = PackedVector2Array(8, -37, 12, -13, 36, 2, 41, 0, 44, -7, 50, -6, 47, 25, 42, 25, 41, 21, 14, 27, 8, 38, -8, 38, -14, 28, -41, 21, -43, 25, -47, 25, -49, -6, -45, -6, -41, -1, -36, 2, -12, -12, -8, -37)
+
+[node name="LaserStartPos" type="Marker2D" parent="." unique_id=1942254718]
+position = Vector2(0, -60)
+
+[node name="LaserTimer" type="Timer" parent="." unique_id=641956832]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="." unique_id=1556456196]
+stream = ExtResource("3_qhqgy")
+volume_db = -5.99
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="." unique_id=641379956]
+stream = ExtResource("4_dqkch")
+volume_db = -8.712
+
+[connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
