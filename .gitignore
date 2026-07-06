@@ -1,5 +1,27 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
-*.translation
 *.import
+
+# Godot 3 specific ignores
+.import/
+
+# Imported translations (can be safely auto-generated)
+*.translation
+
+# Mono/C# specific ignores (if using the .NET version)
+.mono/
+data_~/
+mono_crash.json
+*.csproj
+*.sln
+
+# Build / Export paths
+# (Create a 'builds' folder in your project root to dump game exports)
+builds/
+
+# System / Editor specific ignores
+.DS_Store
+.vscode/
+.idea/
+*.tmp
